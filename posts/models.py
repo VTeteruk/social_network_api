@@ -22,6 +22,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     image = models.ImageField(null=True, blank=True, upload_to=create_unique_file_name)
     description = models.TextField()
+    user = models.ForeignKey(get_user_model(), related_name="posts", on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return f"Post({self.title!r})"
