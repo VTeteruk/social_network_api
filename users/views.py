@@ -15,7 +15,7 @@ class CreateUserView(generics.CreateAPIView):
 
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
-    """Show information about current user"""
+    """Managing with current user"""
 
     serializer_class = UserSerializer
 
@@ -25,6 +25,7 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 @api_view(["GET"])
 def show_activity(request) -> Response:
+    """Show user's activity"""
     user = request.user
     return Response(
         {"last_login": user.last_login, "last_time_request": user.last_time_request},

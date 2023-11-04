@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework_simplejwt",
+    "drf_spectacular",
     "posts",
     "users",
 ]
@@ -51,7 +52,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "social_network_api.middlewares.UpdateLastRequestMiddleware"
+    "social_network_api.middlewares.UpdateLastRequestMiddleware",
 ]
 
 ROOT_URLCONF = "social_network_api.urls"
@@ -138,8 +139,19 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 SIMPLE_JWT = {
     "UPDATE_LAST_LOGIN": True,
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Social Network API",
+    "DESCRIPTION": (
+        "API allows users to create and manage posts,"
+        " like posts, and maintain user accounts."
+    ),
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
 }

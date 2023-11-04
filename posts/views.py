@@ -15,7 +15,9 @@ from posts.serializers import PostSerializer, PostLikeCreateSerializer
 @api_view(["GET"])
 def like_analytics(request) -> Response:
     """Tell the amount of likes during mentioned range.
-    If it is not specified 2 values (date_form or date_to) than the range is 1 day before now
+    If it is not specified 2 values (date_form or date_to) than the range is 1 day before now.
+
+    Example url: .../analytics/?date_from=2020-02-02&date_to=2020-02-15
     """
     date_from = request.GET.get("date_from")
     date_to = request.GET.get("date_to")
@@ -63,6 +65,8 @@ class PostViewSet(ModelViewSet):
         permission_classes=[IsAuthenticated],
     )
     def like_post(self, request, pk=None) -> Response:
+        """Like/Unlike the post"""
+
         user = request.user
         post = self.get_object()
 
