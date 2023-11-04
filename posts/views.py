@@ -21,8 +21,8 @@ def like_analytics(request) -> Response:
         date_from = date_to - timezone.timedelta(days=1)
     else:
         try:
-            date_from = datetime.strptime(date_from, "%Y-%m-%d")
-            date_to = datetime.strptime(date_to, "%Y-%m-%d")
+            datetime.strptime(date_from, "%Y-%m-%d")
+            datetime.strptime(date_to, "%Y-%m-%d")
         except ValueError:
             return Response(
                 {"error": "Invalid date format. Use YYYY-MM-DD."},
