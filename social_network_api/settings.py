@@ -51,6 +51,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "social_network_api.middlewares.UpdateLastRequestMiddleware"
 ]
 
 ROOT_URLCONF = "social_network_api.urls"
