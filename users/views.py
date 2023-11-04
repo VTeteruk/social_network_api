@@ -11,6 +11,7 @@ from users.serializers import UserSerializer
 class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
+    authentication_classes = []
 
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -27,5 +28,5 @@ def show_activity(request) -> Response:
     user = request.user
     return Response(
         {"last_login": user.last_login, "last_time_request": user.last_time_request},
-        status=status.HTTP_200_OK
+        status=status.HTTP_200_OK,
     )

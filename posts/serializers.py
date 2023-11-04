@@ -10,7 +10,15 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ("id", "user", "title", "description", "image", "date_posted", "amount_of_likes")
+        fields = (
+            "id",
+            "user",
+            "title",
+            "description",
+            "image",
+            "date_posted",
+            "amount_of_likes",
+        )
         read_only_fields = ("id", "date_posted", "amount_of_likes", "user")
 
     @staticmethod
@@ -18,6 +26,10 @@ class PostSerializer(serializers.ModelSerializer):
         annotated_queryset = Post.objects.annotate(likes_count=Count("likes"))
         post = annotated_queryset.get(id=instance.id)
         return post.likes_count
+
+    def create(self, validated_data) -> Post:
+        validated_data["user"] = self.context["request"].user
+        return Post.objects.create(**validated_data)
 
 
 class PostLikeCreateSerializer(serializers.ModelSerializer):

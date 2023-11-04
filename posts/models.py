@@ -22,14 +22,18 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     image = models.ImageField(null=True, blank=True, upload_to=create_unique_file_name)
     description = models.TextField()
-    user = models.ForeignKey(get_user_model(), related_name="posts", on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        get_user_model(), related_name="posts", on_delete=models.CASCADE
+    )
 
     def __str__(self) -> str:
         return f"Post({self.title!r})"
 
 
 class Like(models.Model):
-    user = models.ForeignKey(get_user_model(), related_name="likes", on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        get_user_model(), related_name="likes", on_delete=models.CASCADE
+    )
     post = models.ForeignKey(Post, related_name="likes", on_delete=models.CASCADE)
     date_liked = models.DateTimeField(auto_now_add=True)
 
