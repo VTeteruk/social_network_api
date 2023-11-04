@@ -18,3 +18,9 @@ class PostSerializer(serializers.ModelSerializer):
         annotated_queryset = Post.objects.annotate(likes_count=Count("likes"))
         post = annotated_queryset.get(id=instance.id)
         return post.likes_count
+
+
+class PostLikeCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = set()
