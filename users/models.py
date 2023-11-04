@@ -3,4 +3,4 @@ from django.db import models
 
 
 class User(AbstractUser):
-    last_time_request = models.DateTimeField()
+    last_time_request = models.DateTimeField(null=True, blank=True)
