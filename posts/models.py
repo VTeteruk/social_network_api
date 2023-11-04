@@ -12,7 +12,7 @@ def create_unique_file_name(instance: Post, filename: str) -> str:
     _, extension = os.path.splitext(filename)
 
     #  MARK: slugify returns refactored text / uuid creates a unique id
-    filename = f"{slugify(instance.title)}-{uuid.uuid4()}.{extension}"
+    filename = f"{slugify(instance.title)}-{uuid.uuid4()}{extension}"
 
     return os.path.join("uploads/posts_pictures/", filename)
 
