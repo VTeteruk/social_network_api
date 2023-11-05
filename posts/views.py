@@ -49,7 +49,7 @@ def like_analytics(request) -> Response:
 
 
 class PostViewSet(ModelViewSet):
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().prefetch_related("likes").select_related("user")
     permission_classes = (IsAuthenticated, IsOwnerOrAdminPermission)
 
     def get_serializer_class(self) -> serializers:

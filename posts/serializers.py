@@ -1,4 +1,3 @@
-from django.db.models import Count
 from rest_framework import serializers
 
 from posts.models import Post
@@ -23,9 +22,8 @@ class PostSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_amount_of_likes(instance) -> int:
-        annotated_queryset = Post.objects.annotate(likes_count=Count("likes"))
-        post = annotated_queryset.get(id=instance.id)
-        return post.likes_count
+        likes = instance.likes.all()
+        return likes.count()
 
     def create(self, validated_data) -> Post:
         validated_data["user"] = self.context["request"].user
