@@ -42,13 +42,14 @@ class Bot:
 
     def authorize_user(self, user) -> None:
         username = user["username"]
+        user_id = user["id"]
         user_data = {"username": username, "password": "123456"}
         response = requests.post(
             f"{self.base_url}/users/token/", json=user_data
         )
-        self.users_with_tokens[user["id"]] = response.json()["access"]
+        self.users_with_tokens[user_id] = response.json()["access"]
 
-        logging.info(f"User {user['id']} was authorized")
+        logging.info(f"User {user_id} was authorized")
 
     def get_headers(self, user_id: int) -> dict:
         return {"Authorization": f"Bearer {self.users_with_tokens[user_id]}"}
@@ -112,15 +113,25 @@ class Bot:
         logging.info("Bot execution complete.")
 
 
+def validate_config(config: dict) -> None:
+    required_fields = ["number_of_users", "max_posts_per_user", "max_likes_per_user"]
+
+    for field in required_fields:
+        if field not in config or config[field] <= 0:
+            raise ValueError(f"Invalid config: {field} must be greater than 0")
+
+
 if __name__ == "__main__":
-    with open("config.json", "r") as config_file:
-        config = json.load(config_file)
+    with open("config.json", "r") as file:
+        config_file = json.load(file)
+
+    validate_config(config=config_file)
 
     bot = Bot(
-        config["number_of_users"],
-        config["max_posts_per_user"],
-        config["max_likes_per_user"],
-        config["base_url"],
+        config_file["number_of_users"],
+        config_file["max_posts_per_user"],
+        config_file["max_likes_per_user"],
+        config_file["base_url"],
     )
 
     bot.start_bot()
