@@ -28,6 +28,9 @@ def show_activity(request) -> Response:
     """Show user's activity"""
     user = request.user
     return Response(
-        {"last_login": user.last_login, "last_time_request": user.last_time_request},
+        {
+            "last_login": user.last_login,
+            "last_time_request": user.last_time_request,
+        },
         status=status.HTTP_200_OK,
     )

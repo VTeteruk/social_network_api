@@ -127,7 +127,9 @@ class IsOwnerOrAdminPermissionTest(TestCase):
         url = reverse("posts:post-detail", kwargs={"pk": self.post.id})
         self.client.force_authenticate(user=other_user)
         response = self.client.post(url)
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(
+            response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED
+        )
 
     def test_unauthenticated_users_do_not_have_permission(self) -> None:
         url = reverse("posts:post-detail", kwargs={"pk": self.post.id})

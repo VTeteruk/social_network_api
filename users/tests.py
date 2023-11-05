@@ -8,7 +8,9 @@ from django.urls import reverse
 class UserTests(TestCase):
     def setUp(self) -> None:
         self.user = get_user_model().objects.create_user(
-            username="test_user", email="test_user@example.com", password="test_password"
+            username="test_user",
+            email="test_user@example.com",
+            password="test_password",
         )
         self.client = APIClient()
         self.client.force_authenticate(user=self.user)
@@ -31,7 +33,11 @@ class UserTests(TestCase):
 
     def test_update_user_details(self) -> None:
         url = reverse("users:user-details")
-        data = {"first_name": "New", "last_name": "Name", "password": "test_password"}
+        data = {
+            "first_name": "New",
+            "last_name": "Name",
+            "password": "test_password",
+        }
         response = self.client.patch(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.user.refresh_from_db()
@@ -53,12 +59,15 @@ class UserTests(TestCase):
 class MiddlewareTests(TestCase):
     def test_update_last_request_middleware(self) -> None:
         user = get_user_model().objects.create_user(
-            username="test_user", email="testuser@example.com", password="test_password"
+            username="test_user",
+            email="testuser@example.com",
+            password="test_password",
         )
         client = APIClient()
         login_url = reverse("users:token_obtain_pair")
         response = client.post(
-            login_url, data={"username": "test_user", "password": "test_password"}
+            login_url,
+            data={"username": "test_user", "password": "test_password"},
         )
         token = response.data["access"]
 

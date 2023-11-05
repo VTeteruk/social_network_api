@@ -28,7 +28,8 @@ class Migration(migrations.Migration):
                 (
                     "image",
                     models.ImageField(
-                        null=True, upload_to=posts.models.create_unique_file_name
+                        null=True,
+                        upload_to=posts.models.create_unique_file_name,
                     ),
                 ),
                 ("description", models.TextField()),

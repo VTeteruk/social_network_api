@@ -28,7 +28,9 @@ class Migration(migrations.Migration):
             model_name="post",
             name="image",
             field=models.ImageField(
-                blank=True, null=True, upload_to=posts.models.create_unique_file_name
+                blank=True,
+                null=True,
+                upload_to=posts.models.create_unique_file_name,
             ),
         ),
     ]

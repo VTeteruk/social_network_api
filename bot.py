@@ -4,9 +4,7 @@ import logging
 import requests
 import random
 
-logging.basicConfig(
-    level=logging.INFO
-)
+logging.basicConfig(level=logging.INFO)
 
 
 class Bot:
@@ -31,7 +29,9 @@ class Bot:
             "last_name": "test",
             "password": "123456",
         }
-        response = requests.post(f"{self.base_url}/users/register/", json=user_data)
+        response = requests.post(
+            f"{self.base_url}/users/register/", json=user_data
+        )
         status_code = response.status_code
 
         if status_code == 201:
@@ -43,7 +43,9 @@ class Bot:
     def authorize_user(self, user) -> None:
         username = user["username"]
         user_data = {"username": username, "password": "123456"}
-        response = requests.post(f"{self.base_url}/users/token/", json=user_data)
+        response = requests.post(
+            f"{self.base_url}/users/token/", json=user_data
+        )
         self.users_with_tokens[user["id"]] = response.json()["access"]
 
         logging.info(f"User {user['id']} was authorized")
@@ -72,7 +74,8 @@ class Bot:
         page = 1
         while True:
             response = requests.get(
-                f"{self.base_url}/posts/?limit=10&offset={10 * page}", headers=headers
+                f"{self.base_url}/posts/?limit=10&offset={10 * page}",
+                headers=headers,
             ).json()
             posts += [post["id"] for post in response["results"]]
 
@@ -89,7 +92,9 @@ class Bot:
                 f"{self.base_url}/posts/{post_id}/like/", headers=headers
             )
             logging.info(
-                f"User {user_id}" + response.json()["message"][3:] + f" {str(post_id)}"
+                f"User {user_id}"
+                + response.json()["message"][3:]
+                + f" {str(post_id)}"
             )
 
     def start_bot(self) -> None:

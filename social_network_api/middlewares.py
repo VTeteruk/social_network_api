@@ -10,7 +10,8 @@ class UpdateLastRequestMiddleware:
 
     def __call__(self, request) -> Response:
         try:
-            # MARK: Use JWTAuthentication to check if the user is authenticated with JWT
+            # MARK: Use JWTAuthentication to check
+            #  if the user is authenticated with JWT
             jwt_auth = JWTAuthentication().authenticate(request)
             if jwt_auth:
                 user = jwt_auth[0]

@@ -15,7 +15,8 @@ from posts.serializers import PostSerializer, PostLikeCreateSerializer
 @api_view(["GET"])
 def like_analytics(request) -> Response:
     """Tell the amount of likes during mentioned range.
-    If it is not specified 2 values (date_form or date_to) than the range is 1 day before now.
+    If it is not specified 2 values (date_form or date_to)
+    than the range is 1 day before now.
 
     Example url: .../analytics/?date_from=2020-02-02&date_to=2020-02-15
     """
@@ -45,11 +46,13 @@ def like_analytics(request) -> Response:
         Like.objects.filter(date_liked__date__range=[date_from, date_to])
     )
 
-    return Response({f"amount_of_likes_in_the_range": amount_of_likes})
+    return Response({"amount_of_likes_in_the_range": amount_of_likes})
 
 
 class PostViewSet(ModelViewSet):
-    queryset = Post.objects.all().prefetch_related("likes").select_related("user")
+    queryset = (
+        Post.objects.all().prefetch_related("likes").select_related("user")
+    )
     permission_classes = (IsAuthenticated, IsOwnerOrAdminPermission)
 
     def get_serializer_class(self) -> serializers:
@@ -79,5 +82,6 @@ class PostViewSet(ModelViewSet):
         except Like.DoesNotExist:
             Like.objects.create(user=user, post=post)
             return Response(
-                {"message": "You liked the post"}, status=status.HTTP_201_CREATED
+                {"message": "You liked the post"},
+                status=status.HTTP_201_CREATED,
             )
