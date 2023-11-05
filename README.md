@@ -9,10 +9,14 @@ ___
 * API Documentation: Detailed documentation of all API endpoints.
 ___
 # How to Run
-To get the project up and running, follow these steps:
+You must have installed:
+1. Python 3
+2. Docker
 
-1. Rename the [.env.sample](.env_sample) file to ``.env`` and provide the required environment variables.
-2. Run the following command to build and start the project using Docker:
+To get the project up and running, follow these steps:
+1. Create venv ```python -m venv venv``` & activate it ```venv\Scripts\activate.bat```
+2. Rename the [.env.sample](.env_sample) file to ``.env`` and provide the required environment variables.
+3. Run the following command to build and start the project using Docker:
 ```
     docker-compose up --build
 ```
